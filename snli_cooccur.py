@@ -4,7 +4,7 @@
 from collections import Counter
 from multiprocessing import Pool
 from functools import partial
-import cPickle as pickle
+import pickle
 import logging
 import json
 import os
@@ -83,7 +83,7 @@ def tokens_to_max_ngrams(tokens, max_ngram=1):
      (1, ('world', '!'))]
     '''
     tokens = list(tokens)
-    for ngram in xrange(1, max_ngram + 1):
+    for ngram in range(1, max_ngram + 1):
         for token in tokens_to_ngrams(tokens, ngram=ngram):
             yield token
 
@@ -100,7 +100,7 @@ def tokens_to_ngrams(tokens, ngram=1):
     [(0, ('hello', 'world')), (1, ('world', '!'))]
     '''
     tokens = list(tokens)
-    for start in xrange(len(tokens) - (ngram - 1)):
+    for start in range(len(tokens) - (ngram - 1)):
         yield (start, tuple(tokens[start:start + ngram]))
 
 
@@ -489,7 +489,7 @@ def main():
     logging.info('saving to disk (%s)' % resource_usage_str())
 
     mkdirp_parent(args.pickle_path)
-    with open(args.pickle_path, 'w') as f:
+    with open(args.pickle_path, 'wb') as f:
         pickle.dump(counts, f)
 
     logging.info('done')

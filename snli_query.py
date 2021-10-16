@@ -8,7 +8,7 @@ from functools import partial
 from contextlib import contextmanager
 from csv import DictWriter
 import logging
-import cPickle as pickle
+import pickle
 import sys
 
 import yaml
@@ -364,7 +364,7 @@ def write_top_y_batch_yaml(score_func, output_file, counts, queries_path,
     writing results to output_file.
     '''
     with open(queries_path) as f:
-        queries = yaml.load(f)
+        queries = yaml.safe_load(f)
 
     filter_y_kwargs = dict((k, v) for (k, v) in kwargs.items() if k != 'k')
     x_ngram_y_ngram_pairs = []
@@ -585,7 +585,7 @@ def main():
     with _open_output_file() as output_file:
         logging.info('loading counts (%s)' % resource_usage_str())
 
-        with open(args.pickle_path) as f:
+        with open(args.pickle_path, 'rb') as f:
             counts = pickle.load(f)
 
         logging.info('counts loaded (%s)' % resource_usage_str())
